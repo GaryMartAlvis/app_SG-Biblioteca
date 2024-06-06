@@ -17,9 +17,24 @@ def main(stdscr):
     ]
 
     bienvenida = [
-        "Bienvenido a la Biblioteca!",
-        "Seleccione una opción del menú para empezar."
-    ]
+            "Bienvenido a la Biblioteca!",
+            "Seleccione una opción del menú para empezar.",
+            "-------------------------------------------------------------------------------------",
+            "-------------------------------------------------------------------------------------",
+            "",
+            "  ##       ###               #####          ###                              ###",
+            " #  #        #             ##                 ##                              ##",
+            "#    #       #   #####     ##          ####   ##           ###        ###     ##",
+            "#    #   #####       #       #####   ##       ##         ##   ##    ##   ##   ##",
+            "######  ##  ##   #####           ##  ##       ######    ##     ##  ##     ##  ##",
+            "#    #  ##  ##  ##  ##           ##  ##       ##    ##   ##   ##    ##   ##   ##   #",
+            "#    #  ######  ######     ######     ####    ###   ##     ###        ###     ######",
+            "",
+            "-------------------------------------------------------------------------------------",
+            "-------------------------------------------------------------------------------------",
+            "By Gary Y. Martinez Alvis", 
+            "v01/06-2024"
+        ]
 
     def draw_menu():
         h, w = stdscr.getmaxyx()
@@ -42,15 +57,16 @@ def main(stdscr):
             stdscr.addstr(idx, content_x, row[:w - content_x - 1])
         stdscr.refresh()
 
-    def get_input(prompt):
+    def get_input(prompt, max_length=40):
         h, w = stdscr.getmaxyx()
         content_x = int(w * 0.2) + 1
         stdscr.addstr(0, content_x, prompt)
         stdscr.refresh()
         curses.echo()
-        user_input = stdscr.getstr(1, content_x, 40).decode("utf-8")
+        user_input = stdscr.getstr(1, content_x, max_length).decode("utf-8")
         curses.noecho()
         stdscr.clear()
+        draw_menu()
         return user_input
 
     draw_menu()
@@ -69,8 +85,10 @@ def main(stdscr):
             if current_row_idx == 0:
                 titulo = get_input("Título del libro: ")
                 autor = get_input("Autor del libro: ")
-                descripcion = get_input("Descripción del libro: ")
-                biblioteca.agregar_libro(titulo, autor, descripcion)
+                descripcion = get_input("Descripción del libro: ", max_length=200)
+                cantidad = get_input("Cantidad de libros (por defecto 1): ")
+                cantidad = int(cantidad) if cantidad.isdigit() else 1
+                biblioteca.agregar_libro(titulo, autor, descripcion, cantidad)
                 draw_content(["Libro agregado correctamente."])
             elif current_row_idx == 1:
                 biblioteca.mostrar_libros(stdscr)

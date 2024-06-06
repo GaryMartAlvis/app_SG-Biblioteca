@@ -8,11 +8,11 @@ class Biblioteca:
         self.libros = {}
         self.usuarios = {}
 
-    def agregar_libro(self, titulo, autor, descripcion):
+    def agregar_libro(self, titulo, autor, descripcion, cantidad=1):
         if titulo in self.libros:
-            self.libros[titulo].cantidad += 1
+            self.libros[titulo].cantidad += cantidad
         else:
-            self.libros[titulo] = Libro(titulo, autor, descripcion)
+            self.libros[titulo] = Libro(titulo, autor, descripcion, cantidad)
 
     def mostrar_libros(self, stdscr):
         content = []
