@@ -85,7 +85,6 @@ class Biblioteca:
     def _draw_content(self, stdscr, content):
         h, w = stdscr.getmaxyx()
         content_x = int(w * 0.2) + 1
-        stdscr.addstr(0, content_x, '-' * (w - content_x - 1))
         for idx, row in enumerate(content):
             stdscr.addstr(idx + 1, content_x, row[:w - content_x - 1])
         stdscr.refresh()
